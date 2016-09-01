@@ -20,7 +20,7 @@ set wmnu
 set wildmode=list:longest,list:full
 
 if has('gui_running')
-	set guifont=Menlo\ Regular:h12
+	set guifont=Droid\ Sans\ Mono\ 10
 	" set guioptions-=m " remove menu bar
 	set guioptions-=T " remove toolbar
 	set guioptions-=r " remove right-hand scroll bar
