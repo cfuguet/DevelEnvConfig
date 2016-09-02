@@ -6,8 +6,7 @@
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-" allow modelines in vim
-set modelines=5
+set modelines=5                   " allow modelines in vim
 
 " default space/tabs configuration
 set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab smarttab
@@ -28,19 +27,11 @@ set syntax=enable
 set background=dark
 colorscheme solarized
 
-set laststatus=2             " always display the status line
-
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
-" keep 50 lines of command line history
-set history=50
-
-" show the cursor position all the time
-set ruler
-
-" display incomplete commands
-set showcmd
+set laststatus=2                  " always display the status line
+set backspace=indent,eol,start    " allow backspacing over everything
+set ruler                         " show the cursor position all the time
+set history=50                    " keep 50 lines of command line history
+set showcmd                       " display incomplete commands
 
 " {{{ VIM search configuration
 " do incremental searching
