@@ -13,6 +13,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
+Plugin 'godlygeek/tabular'
 call vundle#end()
 
 " Tagbar plugin options
@@ -27,7 +28,7 @@ set modelines=5                   " allow modelines in vim
 set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab smarttab
 
 " command-line completion menu
-set wmnu
+set wildmenu
 set wildmode=list:longest,list:full
 
 if has('gui_running')
