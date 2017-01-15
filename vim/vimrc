@@ -5,6 +5,21 @@
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdtree'
+call vundle#end()
+
+" Tagbar plugin options
+nmap <F8> :TagbarToggle<CR>
+
+" NERDTree plugin options
+nmap <C-n> :NERDTreeToggle<CR>
 
 set modelines=5                   " allow modelines in vim
 
