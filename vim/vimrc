@@ -1,6 +1,6 @@
 " VIM configuration file.
 "
-" Author:   Cesar Fuguet
+" Author:   Cesar Fuguet Tortolero
 
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
@@ -16,147 +16,117 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'godlygeek/tabular'
 call vundle#end()
 
+
 " Tagbar plugin options
 nmap <F8> :TagbarToggle<CR>
+
 
 " NERDTree plugin options
 nmap <C-n> :NERDTreeToggle<CR>
 
+
+" enable modelines
+set modeline
 set modelines=5                   " allow modelines in vim
 
-" default space/tabs configuration
-set tabstop=4 softtabstop=4 shiftwidth=4 noexpandtab smarttab
 
-" command-line completion menu
+" vim command-line related commands
 set wildmenu
 set wildmode=list:longest,list:full
-
-if has('gui_running')
-	set guifont=Droid\ Sans\ Mono\ 10
-	set guioptions-=T " remove toolbar
-	set guioptions-=r " remove right-hand scroll bar
-	set guioptions-=L " remove left-hand scroll bar
-endif
-
-" color scheme settings
-set syntax=enable
-set background=dark
-colorscheme solarized
-
+set showcmd
 set laststatus=2                  " always display the status line
-set backspace=indent,eol,start    " allow backspacing over everything
-set ruler                         " show the cursor position all the time
-set history=50                    " keep 50 lines of command line history
-set showcmd                       " display incomplete commands
 
-" {{{ VIM search configuration
-" do incremental searching
-" during search, ignore case when the pattern contains lowercase letters only
-set incsearch ignorecase smartcase
-" }}}
 
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-  set mouse=a
-endif
+" indentation related configuration
+set bs=indent,eol,start " allow backspacing over everything in insert mode
+set autoindent          " always set autoindenting on
+set ts=4 sts=4 sw=4 noet sta
+set cinoptions=(0,Ws,t0,p0,l1,N-s,g4,h4,i0
+
+set display+=lastline
+set history=50          " keep 50 lines of command line history
+set ruler               " show the cursor position all the time
+set viminfo='20,\"50    " read/write a .viminfo file, don't store more
+                        " than 50 lines of registers
+
+
+" VIM search configuration
+set ignorecase smartcase
+
 
 " VIM swapfiles configuration
-" {{{
 set directory=~/.tmp,/var/tmp,.,/tmp
-" }}}
+
+
+" call this function to use display-based motion on j,k keys
+function SetDisplayBasedMotion()
+  map <buffer> j gj
+  map <buffer> k gk
+endfunction
+
+
+" Only do this part when compiled with support for autocommands
+if has("autocmd")
+  augroup redhat
+	autocmd!
+    autocmd FileType text set tw=0 lbr
+
+    " When editing a file, always jump to the last cursor position
+    autocmd BufReadPost *
+    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+    \   exe "normal! g'\"" |
+    \ endif
+
+    autocmd VimResized * wincmd =
+  augroup END
+
+  augroup latex_config
+	autocmd!
+    autocmd FileType plaintex,tex set textwidth=0 wrap lbr nolist
+    autocmd FileType plaintex,tex call SetDisplayBasedMotion()
+  augroup END
+endif
+
+if has("cscope") && filereadable("/usr/bin/cscope")
+   set csprg=/usr/bin/cscope
+   set csto=0
+   set cst
+   set nocsverb
+   " add any database in current directory
+   if filereadable("cscope.out")
+      cs add cscope.out
+   " else add database pointed to by environment
+   elseif $CSCOPE_DB != ""
+      cs add $CSCOPE_DB
+   endif
+   set csverb
+endif
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 if &t_Co > 2 || has("gui_running")
-	syntax on
-	set hlsearch
+  syntax on
+  set background=dark
+  colorscheme solarized
+
+  set hlsearch
+
+  if has("gui_running")
+    set guioptions-=T
+    set guioptions-=l
+    set guioptions-=L
+    set guioptions-=R
+    set guifont=Liberation\ Mono\ 11
+  endif
 endif
 
-" {{{ wrap mode
-function! ScreenMovement(movement)
-	if &wrap
-		return "g" . a:movement
-	else
-		return a:movement
-	endif
-endfunction
-noremap <silent> <expr> j ScreenMovement("j")
-noremap <silent> <expr> k ScreenMovement("k")
-noremap <silent> <expr> 0 ScreenMovement("0")
-noremap <silent> <expr> ^ ScreenMovement("^")
-noremap <silent> <expr> $ ScreenMovement("$")
-noremap <silent> <expr> <Down> ScreenMovement("j")
-noremap <silent> <expr> <Up> ScreenMovement("k")
 
-set display=lastline
+" VHDL indent plugin specific options
+
+" option to disable alignment of generic/port mappings
+let g:vhdl_indent_genportmap = 0
+
+" option to disable alignment of right-hand side assignment "<=" statements
+let g:vhdl_indent_rhsassign = 0
+
 " }}}
-" {{{ cscope definitions
-if has("cscope")
-	source $HOME/.vim/cscoperc
-endif
-" }}}
-" {{{ Folding
-set fdm=manual  " by default, use the manual folding method
-set fdls=99     " when opening a buffer, open all folds
-" }}}
-
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-
-	" Enable file type detection.
-	" Use the default filetype settings, so that mail gets 'tw' set to 72,
-	" 'cindent' is on in C files, etc.
-	" Also load indent files, to automatically do language-dependent indenting.
-	filetype plugin indent on
-
-	" Use the latex flavor by default for *.tex files
-	let g:tex_flavor = "latex"
-
-	" On tex files, disable syntax-based folding
-	let g:tex_fold_enabled = 0
-	let g:Tex_Folding = 0
-
-	" Disable the latex-suite Insert Mode mappings
-    let g:Imap_FreezeImap = 1
-	imap <buffer> <leader>it <Plug>Tex_InsertItemOnThisLine
-
-	" grep will sometimes skip displaying the file name if you search in a
-	" single file. This will confuse Latex-Suite. Set your grep program to
-	" always generate a file-name.
-	set grepprg=grep\ -nH\ $*
-
-	" On tex files, enable visual break of long lines, and keep its
-	" indentation
-	autocmd FileType tex setlocal tw=0 wrap lbr "sbr=» bri
-
-	" Put these in an autocmd group, so that we can delete them easily.
-	augroup vimrcEx
-		au!
-
-		" For all text files set 'nu'.
-		" autocmd FileType tex setlocal nu
-
-		" When editing a file, always jump to the last known cursor position.
-		" Don't do it when the position is invalid or when inside an event handler
-		" (happens when dropping a file on gvim).
-		" Also don't do it when the mark is in the first line, that is the default
-		" position when opening a file.
-		au BufReadPost *
-		\ if line("'\"") > 1 && line("'\"") <= line("$") |
-		\   exe "normal! g`\"" |
-		\ endif
-
-		" Balance split when vim's window resizes
-		au VimResized * exe "normal \<C-w>="
-	augroup END
-endif " has("autocmd")
-
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
-if !exists(":DiffOrig")
-	command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-		\ | wincmd p | diffthis
-endif
-
-" vim: foldmethod=marker
