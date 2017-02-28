@@ -7,21 +7,32 @@
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'majutsushi/tagbar'
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdtree'
-Plugin 'godlygeek/tabular'
-call vundle#end()
+if isdirectory(glob("$HOME/.vim/bundle/Vundle.vim"))
+	set rtp+=~/.vim/bundle/Vundle.vim
 
-" Tagbar plugin options
-nmap <F8> :TagbarToggle<CR>
+	call vundle#begin()
+	Plugin 'VundleVim/Vundle.vim'
+	Plugin 'majutsushi/tagbar'
+	Plugin 'tpope/vim-fugitive'
+	Plugin 'scrooloose/nerdtree'
+	Plugin 'godlygeek/tabular'
+	Plugin 'wolfgangmehner/c-support'
+	Plugin 'mattn/emmet-vim'
+	call vundle#end()
 
-" NERDTree plugin options
-nmap <C-n> :NERDTreeToggle<CR>
+	" Tagbar plugin options
+	nmap <F8> :TagbarToggle<CR>
 
+	" NERDTree plugin options
+	nmap <C-n> :NERDTreeToggle<CR>
+
+	" set options for the C-support plugin
+	"let g:C_InsertFileHeader = "no"
+	"let g:C_UseTool_doxygen = "yes"
+endif
+
+" enable modelines
+set modeline
 set modelines=5                   " allow modelines in vim
 
 " default space/tabs configuration
@@ -32,9 +43,8 @@ set wildmenu
 set wildmode=list:longest,list:full
 
 if has('gui_running')
-	set guifont=Droid\ Sans\ Mono\ 10
+	set guifont=Droid\ Sans\ Mono\ 11
 	set guioptions-=T " remove toolbar
-	set guioptions-=r " remove right-hand scroll bar
 	set guioptions-=L " remove left-hand scroll bar
 endif
 
@@ -109,6 +119,9 @@ if has("autocmd")
 	" Also load indent files, to automatically do language-dependent indenting.
 	filetype plugin indent on
 
+	" C/C++ indentation options
+	set cinoptions=N-s,(0
+
 	" Use the latex flavor by default for *.tex files
 	let g:tex_flavor = "latex"
 
@@ -137,10 +150,10 @@ if has("autocmd")
 		" autocmd FileType tex setlocal nu
 
 		" When editing a file, always jump to the last known cursor position.
-		" Don't do it when the position is invalid or when inside an event handler
-		" (happens when dropping a file on gvim).
-		" Also don't do it when the mark is in the first line, that is the default
-		" position when opening a file.
+		" Don't do it when the position is invalid or when inside an event
+		" handler (happens when dropping a file on gvim).
+		" Also don't do it when the mark is in the first line, that is the
+		" default position when opening a file.
 		au BufReadPost *
 		\ if line("'\"") > 1 && line("'\"") <= line("$") |
 		\   exe "normal! g`\"" |

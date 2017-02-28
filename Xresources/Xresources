@@ -59,7 +59,9 @@ XTerm*fadeColor:              S_base03
 XTerm*cursorColor:            S_base1
 XTerm*pointerColorBackground: S_base01
 XTerm*pointerColorForeground: S_base1
-XTerm*faceName:               Droid Sans Mono:size=10:antialias=true
+XTerm*faceName:               Droid Sans Mono:size=11:antialias=true
 XTerm*font:                   7x13
 XTerm*metaSendsEscape:        true
 XTerm*locale:                 true
+
+*faceName:					  Droid Sans Mono:size=11:antialias=true
