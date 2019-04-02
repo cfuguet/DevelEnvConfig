@@ -1,0 +1,7 @@
+Install dircolors with the solarized theme:
+
+	dircolors -b dircolors
+
+Display the git branch on the bash prompt:
+
+	$(__git_ps1 "(%s)")
