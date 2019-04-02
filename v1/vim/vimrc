@@ -1,0 +1,54 @@
+"  Make Vim no Vi-compatible
+"
+set nocompatible
+
+
+"  Activate smartcase search
+"    By default search is case-insensitive unless there is an uppercase
+"    character in the search pattern.
+"
+set ignorecase
+set smartcase
+
+"  Activate incremental search
+"
+set incsearch
+
+
+"  Activate modelines
+"    Lines at the beginning or end of the file allowing to modify vim
+"    parameters
+"
+set modeline
+set modelines=5
+
+
+"  Configure directory for swap files
+"
+"  set directory=/var/tmp,/tmp,.
+
+
+"  List mode configuration
+"
+set list
+set listchars=tab:\|\ ,trail:-,nbsp:+
+
+
+"  Set color scheme
+"
+syntax enable
+set background=dark
+colorscheme solarized
+
+
+"  Select the font type when using GUI
+"
+if has("gui_running")
+	"  Set fonts
+	"
+	"  set guifont=DejaVu\ Sans\ Mono\ 12
+endif
+
+"  Enable the Man command to explore manpages directly from VIM
+"
+runtime ftplugin/man.vim
