@@ -1,7 +1,6 @@
-"  Make Vim no Vi-compatible
+"  Make Vim no Vi-compatible (more features available)
 "
 set nocompatible
-
 
 "  Activate smartcase search
 "    By default search is case-insensitive unless there is an uppercase
@@ -14,6 +13,13 @@ set smartcase
 "
 set incsearch
 
+"  Disable all mouse-integration features
+"
+set mouse=
+
+"  Print the line number in front of each line
+"
+set number
 
 "  Activate modelines
 "    Lines at the beginning or end of the file allowing to modify vim
@@ -22,24 +28,20 @@ set incsearch
 set modeline
 set modelines=5
 
-
 "  Configure directory for swap files
 "
 "  set directory=/var/tmp,/tmp,.
 
-
 "  List mode configuration
 "
 set list
-set listchars=tab:\|\ ,trail:-,nbsp:+
-
+set listchars=tab:>\ ,trail:-,nbsp:+
 
 "  Set color scheme
 "
 syntax enable
 set background=dark
 colorscheme solarized
-
 
 "  Select the font type when using GUI
 "
