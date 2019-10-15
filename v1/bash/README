@@ -1,6 +1,9 @@
 Install dircolors with the solarized theme:
 
-	dircolors -b dircolors
+	DIRCOLORS_PATH=~/.dircolors
+	if [ -f ${DIRCOLORS_PATH} ]; then
+		eval $(dircolors -b ${DIRCOLORS_PATH}) ;
+	fi
 
 Display the git branch on the bash prompt:
 

@@ -1,7 +1,6 @@
-"  Make Vim no Vi-compatible
+"  Make Vim no Vi-compatible (more features available)
 "
 set nocompatible
-
 
 "  Activate smartcase search
 "    By default search is case-insensitive unless there is an uppercase
@@ -36,15 +35,13 @@ set mouse=a
 "  List mode configuration
 "
 set list
-set listchars=tab:\|\ ,trail:-,nbsp:+
-
+set listchars=tab:>\ ,trail:-,nbsp:+
 
 "  Set color scheme
 "
 syntax enable
 set background=dark
 colorscheme solarized
-
 
 "  Select the font type when using GUI
 "

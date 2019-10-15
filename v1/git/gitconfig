@@ -1,0 +1,15 @@
+[user]
+	name = cfuguet
+	email =
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+[color]
+	status = auto
+	diff = auto
+	branch = auto
+[core]
+	editor = vim
+[diff]
+	tool = vimdiff
