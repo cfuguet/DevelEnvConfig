@@ -14,7 +14,6 @@ set smartcase
 "
 set incsearch
 
-
 "  Activate modelines
 "    Lines at the beginning or end of the file allowing to modify vim
 "    parameters
@@ -22,11 +21,17 @@ set incsearch
 set modeline
 set modelines=5
 
-
 "  Configure directory for swap files
 "
-"  set directory=/var/tmp,/tmp,.
+set directory=/var/tmp,/tmp,.
 
+"  Show line number
+"
+set number
+
+"  Enable mouse integration
+"
+set mouse=a
 
 "  List mode configuration
 "
